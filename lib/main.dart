@@ -1,5 +1,6 @@
 import 'package:testapp/constants.dart';
 import 'package:testapp/controllers/DashboardController.dart';
+import 'package:testapp/controllers/MedicineController.dart';
 import 'package:testapp/controllers/MenuController.dart';
 import 'package:testapp/controllers/SharedPrefController.dart';
 import 'package:testapp/screens/main/main_screen.dart';
@@ -36,7 +37,8 @@ class MyApp extends StatelessWidget {
               create: (context) => SidebarController(),
           ),
           ChangeNotifierProvider(create: (context) => DashboardController()),
-          ChangeNotifierProvider(create: (create) => SharedPrefController())
+          ChangeNotifierProvider(create: (create) => SharedPrefController()),
+          ChangeNotifierProvider(create: (create) => MedicineController()),
         ],
         child: MainScreen(),
       ),

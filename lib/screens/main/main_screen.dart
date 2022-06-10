@@ -5,17 +5,19 @@ import 'package:testapp/screens/dashboard/dashboard_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:testapp/screens/medicine/medicine_screen.dart';
 
 import 'components/side_menu.dart';
 
 class MainScreen extends StatelessWidget {
   DashboardScreen dashboardScreen = new DashboardScreen();
+  MedicineScreen medicineScreen = new MedicineScreen();
   Scaffold scaffold = new Scaffold();
   List<Widget> _widgets = [];
   List<Widget> getWidgets(){
     if(_widgets.length==0){
       _widgets.add(dashboardScreen);
-      _widgets.add(scaffold);
+      _widgets.add(medicineScreen);
       _widgets.add(scaffold);
       _widgets.add(scaffold);
       _widgets.add(scaffold);
