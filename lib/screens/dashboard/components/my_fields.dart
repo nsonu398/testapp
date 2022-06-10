@@ -1,9 +1,11 @@
+import 'package:provider/provider.dart';
 import 'package:testapp/screens/dashboard/components/CalenderFilter.dart';
 import 'package:testapp/models/MyFiles.dart';
 import 'package:testapp/responsive.dart';
 import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
+import '../../../controllers/SharedPrefController.dart';
 import 'file_info_card.dart';
 
 class MyFiles extends StatelessWidget {
@@ -20,7 +22,7 @@ class MyFiles extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "My Files",
+              context.watch<SharedPrefController>().counter,
               style: Theme.of(context).textTheme.subtitle1,
             ),
             CalenderFilter(),

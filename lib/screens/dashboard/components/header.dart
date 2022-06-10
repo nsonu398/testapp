@@ -1,5 +1,6 @@
 import 'package:testapp/controllers/DashboardController.dart';
 import 'package:testapp/controllers/MenuController.dart';
+import 'package:testapp/controllers/SharedPrefController.dart';
 import 'package:testapp/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -83,7 +84,7 @@ class SearchField extends StatelessWidget {
     return TextField(
       controller: TextEditingController(text: context.read<DashboardController>().searchText),
       onChanged: (text){
-        context.read<DashboardController>().search(text);
+        context.read<SharedPrefController>().setCounter(text);
       },
       decoration: InputDecoration(
         hintText: "Search",
