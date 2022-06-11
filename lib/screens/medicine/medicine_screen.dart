@@ -3,22 +3,14 @@ import 'package:testapp/controllers/MedicineController.dart';
 import 'package:testapp/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:testapp/screens/dashboard/components/my_fields.dart';
 import 'package:testapp/screens/medicine/components/EditMedicineField.dart';
 
 import '../../constants.dart';
 import '../dashboard/components/header.dart';
-import '../dashboard/components/recent_files.dart';
-import '../dashboard/components/storage_details.dart';
+import 'components/MedicineSuggestionListItem.dart';
 import 'components/add_medicine_field.dart';
 
 class MedicineScreen extends StatelessWidget {
-
-  MedicineScreen(){
-
-  }
-  var array = [['Name',''],['Company',''],['Type',''],['Amount(in mg or ml)',''],['Price per pack','']];
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -45,9 +37,11 @@ class MedicineScreen extends StatelessWidget {
                         itemCount:(context.watch<MedicineController>().array as List<Object>).length,
                         itemBuilder: (context,index){
                           return  AddMedicineField(
-                              property: context.watch<MedicineController>().getProperty(index),
+                              fieldProperty: context.watch<MedicineController>().getFieldProperty(index),
+                              fieldValue: context.watch<MedicineController>().getFieldValue(index),
+                              showFieldSuggestions: context.watch<MedicineController>().getShowFieldSuggestuions(index),
                               callback: (value){
-                                array[index][1]=value as String;
+                                context.read<MedicineController>().addFieldDetails(index, value);
                               }
                           );
                         }
@@ -60,7 +54,7 @@ class MedicineScreen extends StatelessWidget {
                         child: EditMedicineField(
                           property: 'New Filed',
                           callback: (value){
-                            var x = [value as String,''];
+                            var x = [value as String,'','f'];
                             context.read<MedicineController>().addNewField(x);
                           },
                         )
@@ -68,12 +62,18 @@ class MedicineScreen extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          ElevatedButton(onPressed: (){
-                            context.read<MedicineController>().setShowNewFieldWidget(true);
-                          }, child: Text('Add Field') ,style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Colors.green)),),
-                          ElevatedButton(onPressed: (){
-                            context.read<MedicineController>().setShowNewFieldWidget(false);
-                          }, child: Text('Save'))
+                          Container(
+                            width: 150,
+                            child: ElevatedButton(onPressed: (){
+                              context.read<MedicineController>().setShowNewFieldWidget(true);
+                            }, child: Text('Add Field') ,style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Colors.green)),),
+                          ),
+                          Container(
+                            width: 150,
+                            child: ElevatedButton(onPressed: (){
+                              context.read<MedicineController>().setShowNewFieldWidget(false);
+                            }, child: Text('Save')),
+                          )
                         ],
                       )
                       /*RecentFiles(),
@@ -84,12 +84,26 @@ class MedicineScreen extends StatelessWidget {
                   ),
                 ),
                 if (!Responsive.isMobile(context))
-                  SizedBox(width: defaultPadding),
+                  SizedBox(width: defaultPadding*2),
                 // On Mobile means if the screen is less than 850 we dont want to show it
                 if (!Responsive.isMobile(context))
                   Expanded(
                     flex: 4,
-                    child: StarageDetails(),
+                    child: //StarageDetails(),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Suggestions',style: Theme.of(context).textTheme.headline6,),
+                          SizedBox(height: defaultPadding,),
+                          ListView.builder(
+                            itemCount: 5,
+                            shrinkWrap: true,
+                            itemBuilder: (BuildContext context,int index){
+                              return MedicineSuggestionListItem();
+                            }
+                          )
+                        ],
+                      ),
                   ),
               ],
             )
