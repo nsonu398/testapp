@@ -35,6 +35,8 @@ dependencies:
   data_table_2: ^2.0.3
   shared_preferences: ^2.0.15
   streaming_shared_preferences: ^2.0.0
+  google_sign_in: ^5.3.3
+  firebase_core: ^1.17.1
 
 dev_dependencies:
   flutter_test:
